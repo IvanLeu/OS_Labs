@@ -15,3 +15,8 @@ if(MSVC)
 		PRIVATE /MP
 	)
 endif()
+
+set(DATA_DIR "${CMAKE_CURRENT_SOURCE_DIR}/files")
+
+file(COPY ${DATA_DIR} DESTINATION "${CMAKE_BINARY_DIR}/files")
+
