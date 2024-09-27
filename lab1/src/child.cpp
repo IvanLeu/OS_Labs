@@ -12,7 +12,9 @@ int main() {
 		char* ptr = line;
 
 		float result;
-		sscanf(ptr, "%f", &result);
+		if (sscanf(ptr, "%f", &result) != 1) {
+			return 0;
+		}
 
 		float val;
 		while (sscanf(ptr, "%f", &val) == 1) {

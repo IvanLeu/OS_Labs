@@ -14,6 +14,5 @@ if(MSVC)
 		core
 		PRIVATE /W4
 		PRIVATE /MP
-		PRIVATE /WX
 	)
 endif()

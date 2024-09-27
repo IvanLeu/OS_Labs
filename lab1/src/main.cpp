@@ -61,7 +61,7 @@ int main() {
 		CloseHandle(hChild_STDOUT_WR);
 		CloseHandle(hFile);
 
-		DWORD bytesRead, bytesWritten;
+		DWORD bytesRead;
 		char buffer[4096];
 		while (ReadFile(hChild_STDOUT_RD, buffer, sizeof(buffer) - 1, &bytesRead, NULL) && bytesRead > 0) {
 			buffer[bytesRead] = 0;
