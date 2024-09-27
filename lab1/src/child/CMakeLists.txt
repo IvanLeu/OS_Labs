@@ -1,16 +1,16 @@
 cmake_minimum_required(VERSION 3.26)
 
 set(sources
-	"${CMAKE_CURRENT_SOURCE_DIR}/main.cpp"
+	"${CMAKE_CURRENT_SOURCE_DIR}/child.cpp"
 )
 
 add_executable(
-	core
+	child
 	${sources})
 
 if(MSVC)
 	target_compile_options(
-		core
+		child
 		PRIVATE /W4
 		PRIVATE /MP
 	)
