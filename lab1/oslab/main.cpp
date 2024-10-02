@@ -1,19 +1,26 @@
 #include <stdio.h>
 #include <Windows.h>
 #include <stdexcept>
+#include <filesystem>
+#include <iostream>
+#include <iterator>
 
 int main() {
 	try {
+		std::string file_name;
+		std::cin >> file_name;
+		std::wstring wfile_name(file_name.begin(), file_name.end());
+
 		HANDLE hFile = NULL;
 		HANDLE hChild_STDOUT_RD = NULL;
 		HANDLE hChild_STDOUT_WR = NULL;
 
 		SECURITY_ATTRIBUTES sa;
-		sa.nLength = sizeof(sa);
+		sa.nLength = sizeof(SECURITY_ATTRIBUTES);
 		sa.bInheritHandle = TRUE;
 		sa.lpSecurityDescriptor = NULL;
-
-		hFile = CreateFile("files\\file.txt", GENERIC_READ, 0, &sa, OPEN_EXISTING, FILE_ATTRIBUTE_READONLY, NULL);
+		
+		hFile = CreateFile(wfile_name.c_str(), GENERIC_READ, 0, &sa, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
 		if (hFile == INVALID_HANDLE_VALUE) {
 			throw std::runtime_error("Failed to open a file");
@@ -23,7 +30,7 @@ int main() {
 			throw std::runtime_error("Failed to create the pipe");
 		}
 
-		if (!SetHandleInformation(&hChild_STDOUT_RD, HANDLE_FLAG_INHERIT, 0)) {
+		if (!SetHandleInformation(hChild_STDOUT_RD, HANDLE_FLAG_INHERIT, 0)) {
 			throw std::runtime_error("Failed set handle information");
 		}
 
@@ -39,7 +46,7 @@ int main() {
 		siStartInfo.cb = sizeof(STARTUPINFO);
 		siStartInfo.hStdInput = hFile;
 		siStartInfo.hStdOutput = hChild_STDOUT_WR;
-		siStartInfo.hStdError = GetStdHandle(STD_ERROR_HANDLE);
+		siStartInfo.hStdError = hChild_STDOUT_WR;
 		siStartInfo.dwFlags |= STARTF_USESTDHANDLES;
 
 		bSuccess = CreateProcess(
@@ -55,28 +62,33 @@ int main() {
 			&piProcInfo);
 
 		if (!bSuccess) {
-			throw std::runtime_error("Filed to create a child process");
+			throw std::runtime_error("Failed to create a child process");
 		}
-
+		
 		CloseHandle(hChild_STDOUT_WR);
 		CloseHandle(hFile);
 
 		DWORD bytesRead;
-		char buffer[4096];
-		while (ReadFile(hChild_STDOUT_RD, buffer, sizeof(buffer) - 1, &bytesRead, NULL) && bytesRead > 0) {
-			buffer[bytesRead] = 0;
-			printf("%s", buffer);
+		float result;
+		while(ReadFile(hChild_STDOUT_RD, &result, sizeof(float), &bytesRead, NULL))
+		{
+			std::cout << result << std::endl;
 		}
+
+		WaitForSingleObject(piProcInfo.hProcess, INFINITE);
 
 		CloseHandle(hChild_STDOUT_RD);
 		CloseHandle(piProcInfo.hProcess);
 		CloseHandle(piProcInfo.hThread);
 	}
 	catch (const std::runtime_error& e) {
-		MessageBox(NULL, e.what(), "Runtime Error", MB_OK);
+		std::string error = e.what();
+		std::wstring werror(error.begin(), error.end());
+
+		MessageBox(NULL, werror.c_str(), L"Runtime Error", MB_OK);
 	}
 	catch (...) {
-		MessageBox(NULL, "Unknownd error ocurred", "Error", MB_OK);
+		MessageBox(NULL, L"Unknownd error ocurred", L"Error", MB_OK);
 	}
 
 	return 0;
