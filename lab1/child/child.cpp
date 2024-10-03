@@ -18,7 +18,6 @@ int main() {
 	}
 
 	char buffer[256];
-	float x, y, z;
 	while (true) {
 		float result;
 
@@ -38,13 +37,17 @@ int main() {
 			while (std::getline(iss, line)) {
 				std::istringstream line_ss(line);
 
-				line_ss >> x >> y >> z;
+				float y;
+				
+				line_ss >> result;
 
-				if (y == 0.0f || z == 0.0f) {
-					exit(1);
+				while (line_ss >> y) {
+					if (y == 0.0f) {
+						exit(1);
+					}
+
+					result /= y;
 				}
-
-				result = x / y / z;
 
 				WriteFile(writeHandle, &result, sizeof(float), &writtenBytes, NULL);
 			}
