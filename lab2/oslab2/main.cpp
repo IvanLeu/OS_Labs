@@ -1,28 +1,23 @@
 #include <Windows.h>
 #include <iostream>
+#include <vector>
 
 struct ThreadData {
-	int** matrix;
-	int size;
-	int row;
-	int column;
+	std::vector<std::vector<int>> matrix;
+	size_t size;
+	size_t row;
+	size_t column;
+	int nThreads;
+	HANDLE semaphore;
 };
 
-void deleteMatrix(int** matrix, int size) {
-	for (int i = 0; i < size; i++) {
-		delete[] matrix[i];
-	}
-	delete[] matrix;
-}
+int calculateDeterminant(const std::vector<std::vector<int>>& matrix, size_t size, size_t nThreads);
 
 DWORD CALLBACK calculateSubDeterminant(LPVOID param) {
 	ThreadData* data = static_cast<ThreadData*>(param);
-	int newSize = data->size - 1;
+	size_t newSize = data->size - 1;
 
-	int** subMatrix = new int* [newSize];
-	for (int i = 0; i < newSize; ++i) {
-		subMatrix[i] = new int[newSize];
-	}
+	std::vector<std::vector<int>> subMatrix(newSize, std::vector<int>(newSize));
 
 	for (int i = 1; i < data->size; i++) {
 		int colIndex = 0;
@@ -35,17 +30,19 @@ DWORD CALLBACK calculateSubDeterminant(LPVOID param) {
 		}
 	}
 
-	int result = calculateDeterminant(subMatrix, newSize);
+	int result = calculateDeterminant(subMatrix, newSize, data->nThreads);
 
-	deleteMatrix(subMatrix, newSize);
-	
+	ReleaseSemaphore(data->semaphore, 1, NULL);
+
 	return result;
 }
 
-int calculateDeterminant(int** matrix, int size) {
+int calculateDeterminant(const std::vector<std::vector<int>>& matrix, size_t size, size_t nThreads) {
 	if (size == 1) {
 		return matrix[0][0];
 	}
+
+	HANDLE semaphore = CreateSemaphore(NULL, nThreads, nThreads, NULL);
 
 	int determinant = 0;
 	HANDLE* threads = new HANDLE[size];
@@ -53,10 +50,15 @@ int calculateDeterminant(int** matrix, int size) {
 	int* results = new int[size];
 
 	for (int col = 0; col < size; ++col) {
+		
+		WaitForSingleObject(semaphore, INFINITE);
+
 		data[col].matrix = matrix;
 		data[col].size = size;
 		data[col].row = 0;
 		data[col].column = col;
+		data[col].semaphore = semaphore;
+		data[col].nThreads = nThreads;
 
 		threads[col] = CreateThread(NULL, 0, calculateSubDeterminant, &data[col], 0, NULL);
 	}
@@ -67,13 +69,15 @@ int calculateDeterminant(int** matrix, int size) {
 		DWORD code;
 		GetExitCodeThread(threads[col], &code);
 		results[col] = code;
-		determinant = ((col % 2 == 0 ? 1 : -1) * matrix[0][col] * results[col]);
+		determinant += ((col % 2 == 0 ? 1 : -1) * matrix[0][col] * results[col]);
 		CloseHandle(threads[col]);
 	}
 
 	delete[] threads;
 	delete[] data;
 	delete[] results;
+
+	CloseHandle(semaphore);
 
 	return determinant;
 }
@@ -87,18 +91,15 @@ int main() {
 	std::cout << "Enter matrix size: ";
 	std::cin >> size;
 
-	int** matrix = new int* [size];
+	std::vector<std::vector<int>> matrix(size, std::vector<int>(size));
 	std::cout << "Enter matrix elements: ";
 	for (int i = 0; i < size; ++i) {
-		matrix[i] = new int[i];
 		for (int j = 0; j < size; ++j) {
 			std::cin >> matrix[i][j];
 		}
 	}
 
-	int determinant = calculateDeterminant(matrix, size);
-
-	deleteMatrix(matrix, size);
+	int determinant = calculateDeterminant(matrix, size, maxThreads);
 
 	std::cout << determinant << std::endl;
 
