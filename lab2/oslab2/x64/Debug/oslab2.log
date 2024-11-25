@@ -1,6 +1,6 @@
 ﻿  main.cpp
-C:\Dev\Cpp_Projects\oslab2\oslab2\main.cpp(45,53): warning C4267: 'argument': conversion from 'size_t' to 'LONG', possible loss of data
-C:\Dev\Cpp_Projects\oslab2\oslab2\main.cpp(45,43): warning C4267: 'argument': conversion from 'size_t' to 'LONG', possible loss of data
-C:\Dev\Cpp_Projects\oslab2\oslab2\main.cpp(61,24): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-C:\Dev\Cpp_Projects\oslab2\oslab2\main.cpp(66,25): warning C4267: 'argument': conversion from 'size_t' to 'DWORD', possible loss of data
-  oslab2.vcxproj -> C:\Dev\Cpp_Projects\oslab2\x64\Debug\oslab2.exe
+C:\Users\Ivan\Desktop\MAI\os_labs\OS_Labs\lab2\oslab2\main.cpp(45,53): warning C4267: 'argument': conversion from 'size_t' to 'LONG', possible loss of data
+C:\Users\Ivan\Desktop\MAI\os_labs\OS_Labs\lab2\oslab2\main.cpp(45,43): warning C4267: 'argument': conversion from 'size_t' to 'LONG', possible loss of data
+C:\Users\Ivan\Desktop\MAI\os_labs\OS_Labs\lab2\oslab2\main.cpp(61,24): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Ivan\Desktop\MAI\os_labs\OS_Labs\lab2\oslab2\main.cpp(66,25): warning C4267: 'argument': conversion from 'size_t' to 'DWORD', possible loss of data
+  oslab2.vcxproj -> C:\Users\Ivan\Desktop\MAI\os_labs\OS_Labs\lab2\x64\Debug\oslab2.exe
