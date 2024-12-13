@@ -1,0 +1,50 @@
+﻿  main.cpp
+C:\Users\Ivan\source\repos\oslab5_7\common\List.h(35,79): warning C4834: discarding return value of function with [[nodiscard]] attribute
+  (compiling source file 'main.cpp')
+  
+C:\Users\Ivan\source\repos\oslab5_7\node\main.cpp(20,46): error C2039: 'socket': is not a member of 'Node'
+      C:\Users\Ivan\source\repos\oslab5_7\common\List.h(15,7):
+      see declaration of 'Node'
+  
+C:\Users\Ivan\source\repos\oslab5_7\node\main.cpp(20,56): error C3536: 'msg': cannot be used before it is initialized
+C:\Users\Ivan\source\repos\oslab5_7\node\main.cpp(21,23): error C2100: you cannot dereference an operand of type 'int'
+C:\Users\Ivan\source\repos\oslab5_7\node\main.cpp(30,27): error C2039: 'socket': is not a member of 'Node'
+      C:\Users\Ivan\source\repos\oslab5_7\common\List.h(15,7):
+      see declaration of 'Node'
+  
+C:\Users\Ivan\source\repos\oslab5_7\node\main.cpp(34,27): error C2039: 'socket': is not a member of 'Node'
+      C:\Users\Ivan\source\repos\oslab5_7\common\List.h(15,7):
+      see declaration of 'Node'
+  
+C:\Users\Ivan\source\repos\oslab5_7\node\main.cpp(40,27): error C2039: 'socket': is not a member of 'Node'
+      C:\Users\Ivan\source\repos\oslab5_7\common\List.h(15,7):
+      see declaration of 'Node'
+  
+C:\Users\Ivan\source\repos\oslab5_7\node\main.cpp(50,27): error C2039: 'socket': is not a member of 'Node'
+      C:\Users\Ivan\source\repos\oslab5_7\common\List.h(15,7):
+      see declaration of 'Node'
+  
+C:\Users\Ivan\source\repos\oslab5_7\node\main.cpp(64,31): error C2039: 'socket': is not a member of 'Node'
+      C:\Users\Ivan\source\repos\oslab5_7\common\List.h(15,7):
+      see declaration of 'Node'
+  
+C:\Users\Ivan\source\repos\oslab5_7\node\main.cpp(70,35): error C2039: 'socket': is not a member of 'Node'
+      C:\Users\Ivan\source\repos\oslab5_7\common\List.h(15,7):
+      see declaration of 'Node'
+  
+C:\Users\Ivan\source\repos\oslab5_7\node\main.cpp(74,35): error C2039: 'socket': is not a member of 'Node'
+      C:\Users\Ivan\source\repos\oslab5_7\common\List.h(15,7):
+      see declaration of 'Node'
+  
+C:\Users\Ivan\source\repos\oslab5_7\node\main.cpp(82,27): error C2039: 'socket': is not a member of 'Node'
+      C:\Users\Ivan\source\repos\oslab5_7\common\List.h(15,7):
+      see declaration of 'Node'
+  
+C:\Users\Ivan\source\repos\oslab5_7\node\main.cpp(83,30): error C2039: 'socket': is not a member of 'Node'
+      C:\Users\Ivan\source\repos\oslab5_7\common\List.h(15,7):
+      see declaration of 'Node'
+  
+C:\Users\Ivan\source\repos\oslab5_7\node\main.cpp(84,18): error C2039: 'socket': is not a member of 'Node'
+      C:\Users\Ivan\source\repos\oslab5_7\common\List.h(15,7):
+      see declaration of 'Node'
+  

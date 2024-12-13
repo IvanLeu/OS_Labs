@@ -1,0 +1,7 @@
+﻿  main.cpp
+C:\Users\Ivan\source\repos\oslab5_7\common\List.h(35,79): warning C4834: discarding return value of function with [[nodiscard]] attribute
+  (compiling source file 'main.cpp')
+  
+  oslab5_7.vcxproj -> C:\Users\Ivan\source\repos\oslab5_7\x64\Debug\control.exe
+  'pwsh.exe' is not recognized as an internal or external command,
+  operable program or batch file.
